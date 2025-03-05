@@ -2,7 +2,7 @@
     <div class="max-w-7xl mx-auto py-12 px-4 overflow-hidden sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
-                <img src="{{ asset('images/kangis-logo.png') }}" alt="KANGIS Logo" class="h-16 w-auto mb-4">
+                <img src="https://i.ibb.co/cSPdM5JR/Whats-App-Image-2025-02-28-at-4-01-36-PM-1.jpg" alt="KANGIS Logo" class="h-16 w-auto mb-4">
                 <p class="text-sm text-gray-200">
                     Kano State Geographic Information System (KANGIS) under the Ministry of Land and Physical Planning.
                 </p>

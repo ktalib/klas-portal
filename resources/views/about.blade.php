@@ -5,9 +5,9 @@
 @section('content')
 <div class="relative">
     <!-- Hero Section -->
-    <div class="relative bg-blue-700">
+    <div class="relative bg-green-700">
         <div class="absolute inset-0">
-            <img src="{{ asset('images/about-us.jpg') }}" alt="About Us" class="w-full h-full object-cover opacity-30">
+            <img src="https://pbs.twimg.com/media/F44Tw_cWYAAe2hN.jpg" alt="About Us" class="w-full h-full object-cover opacity-30">
         </div>
         <div class="relative max-w-7xl mx-auto py-24 px-4 sm:py-32 sm:px-6 lg:px-8">
             <h1 class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">About Kano State Geographic Information System</h1>

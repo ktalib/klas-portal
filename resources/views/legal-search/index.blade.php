@@ -45,80 +45,107 @@
                     </div>
                 </div>
 
-                <!-- File Number Search Form -->
-                <div id="file-number-search" class="mb-8">
-                    <form action="{{ route('legal-search.search') }}" method="POST" class="space-y-6">
-                        @csrf
-                        <div>
-                            <label for="file_number" class="block text-sm font-medium text-gray-700">File Number</label>
-                            <div class="mt-1">
-                                <input type="text" name="file_number" id="file_number" class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Enter file number">
-                            </div>
-                        </div>
+               
+   <!-- File Number Search Form -->
+<div id="file-number-search" class="mb-8">
+    <form action="{{ route('legal-search.search') }}" method="POST" class="space-y-6">
+        @csrf
+        <div>
+            <label for="file_number" class="block text-sm font-medium text-gray-700">File Number</label>
+            <div class="mt-1">
+                <input type="text" name="file_number" id="file_number" class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Enter file number">
+            </div>
+        </div>
 
-                        <div>
-                            <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
-                                Search
-                            </button>
-                        </div>
-                    </form>
+        <div>
+            <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                Search
+            </button>
+            {{-- <button type="button" class="ml-3 inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" onclick="generateSearch()">
+                Generate Search
+            </button> --}}
+        </div>
+    </form>
+</div>
+
+<!-- Plot Details Search Form -->
+<div id="details-search" class="hidden mb-8">
+    <form action="{{ route('legal-search.search') }}" method="POST" class="space-y-6">
+        @csrf
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div>
+                <label for="file_number" class="block text-sm font-medium text-gray-700">File Number</label>
+                <div class="mt-1">
+                    <input type="text" name="file_number" id="file_number" class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Enter file number">
                 </div>
-
-                <!-- Plot Details Search Form -->
-                <div id="details-search" class="hidden mb-8">
-                    <form action="{{ route('legal-search.advanced-search') }}" method="POST" class="space-y-6">
-                        @csrf
-                        <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-2">
-                            <div>
-                                <label for="owner_name" class="block text-sm font-medium text-gray-700">Owner Name</label>
-                                <div class="mt-1">
-                                    <input type="text" name="owner_name" id="owner_name" class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Enter owner name">
-                                </div>
-                            </div>
-
-                            <div>
-                                <label for="plot_number" class="block text-sm font-medium text-gray-700">Plot Number</label>
-                                <div class="mt-1">
-                                    <input type="text" name="plot_number" id="plot_number" class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Enter plot number">
-                                </div>
-                            </div>
-
-                            <div>
-                                <label for="location" class="block text-sm font-medium text-gray-700">Location/Area</label>
-                                <div class="mt-1">
-                                    <select id="location" name="location" class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md">
-                                        <option value="">Select location</option>
-                                        <option value="Nassarawa">Nassarawa</option>
-                                        <option value="Kano Municipal">Kano Municipal</option>
-                                        <option value="Dala">Dala</option>
-                                        <option value="Fagge">Fagge</option>
-                                        <option value="Gwale">Gwale</option>
-                                        <option value="Tarauni">Tarauni</option>
-                                        <option value="Ungogo">Ungogo</option>
-                                        <option value="Kumbotso">Kumbotso</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div>
-                                <label for="certificate_number" class="block text-sm font-medium text-gray-700">Certificate Number</label>
-                                <div class="mt-1">
-                                    <input type="text" name="certificate_number" id="certificate_number" class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Enter certificate number">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
-                                Search
-                            </button>
-                            <button type="reset" class="ml-3 inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
-                                Reset
-                            </button>
-                        </div>
-                    </form>
+            </div>
+            <div>
+                <label for="kangis_file_number" class="block text-sm font-medium text-gray-700">KANGIS File Number</label>
+                <div class="mt-1">
+                    <input type="text" name="kangis_file_number" id="kangis_file_number" class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Enter KANGIS file number">
                 </div>
+            </div>
+            <div>
+                <label for="mlsf_no" class="block text-sm font-medium text-gray-700">MLSF Number</label>
+                <div class="mt-1">
+                    <input type="text" name="mlsf_no" id="mlsf_no" class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Enter MLSF number">
+                </div>
+            </div>
+            <div>
+                <label for="plot_number" class="block text-sm font-medium text-gray-700">Plot Number</label>
+                <div class="mt-1">
+                    <input type="text" name="plot_number" id="plot_number" class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Enter plot number">
+                </div>
+            </div>
+            <div>
+                <label for="plan_number" class="block text-sm font-medium text-gray-700">Plan Number</label>
+                <div class="mt-1">
+                    <input type="text" name="plan_number" id="plan_number" class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Enter plan number">
+                </div>
+            </div>
+            <div>
+                <label for="plot_description" class="block text-sm font-medium text-gray-700">Plot Description</label>
+                <div class="mt-1">
+                    <input type="text" name="plot_description" id="plot_description" class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Enter plot description">
+                </div>
+            </div>
+            <div>
+                <label for="assignor" class="block text-sm font-medium text-gray-700">Assignor</label>
+                <div class="mt-1">
+                    <input type="text" name="assignor" id="assignor" class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Enter assignor">
+                </div>
+            </div>
+            <div>
+                <label for="assignee" class="block text-sm font-medium text-gray-700">Assignee</label>
+                <div class="mt-1">
+                    <input type="text" name="assignee" id="assignee" class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Enter assignee">
+                </div>
+            </div>
+            <div>
+                <label for="registration_number" class="block text-sm font-medium text-gray-700">Registration Number</label>
+                <div class="mt-1">
+                    <input type="text" name="registration_number" id="registration_number" class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Enter registration number">
+                </div>
+            </div>
+        </div>
 
+        <div>
+            <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                Search
+            </button>
+            {{-- <button type="button" class="ml-3 inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" onclick="generateSearch()">
+                Generate Search
+            </button> --}}
+        </div>
+    </form>
+</div>
+
+<script>
+    function generateSearch() {
+        // Redirect to the payment page or handle the payment process
+        window.location.href = "{{ route('legal-search.payment') }}";
+    }
+</script>
                 <!-- Search Fee Information -->
                 <div class="rounded-md bg-yellow-50 p-4">
                     <div class="flex">

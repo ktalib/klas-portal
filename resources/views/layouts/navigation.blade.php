@@ -4,7 +4,9 @@
             <div class="flex">
                 <div class="flex-shrink-0 flex items-center">
                     <a href="{{ route('home') }}">
-                        <img src="{{ asset('images/kangis-logo.png') }}" alt="KANGIS Logo" class="h-12 w-auto">
+                  
+ {{--   --}}
+                        <img src="https://i.ibb.co/cSPdM5JR/Whats-App-Image-2025-02-28-at-4-01-36-PM-1.jpg" alt="KANGIS Logo" class="h-12 w-auto">
                     </a>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
@@ -18,7 +20,7 @@
                         Services
                     </a>
                     <a href="{{ route('legal-search') }}" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-white hover:text-yellow-200 hover:border-yellow-300 focus:outline-none focus:text-yellow-200 focus:border-yellow-300 transition duration-150 ease-in-out">
-                        Legal Search
+                       Conduct A Legal Search Online
                     </a>
                     <a href="{{ route('webmap') }}" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-white hover:text-yellow-200 hover:border-yellow-300 focus:outline-none focus:text-yellow-200 focus:border-yellow-300 transition duration-150 ease-in-out">
                         Webmap
@@ -27,7 +29,11 @@
                         Contact
                     </a>
                 </div>
+
+                
             </div>
+
+            <img src="https://i.ibb.co/p6fGzp43/Whats-App-Image-2025-02-28-at-4-01-36-PM.jpg" alt="KANGIS Logo" class="h-12 w-auto">
             <div class="hidden sm:flex sm:items-center sm:ml-6">
                 @auth
                     <div class="ml-3 relative">

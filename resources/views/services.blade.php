@@ -7,7 +7,7 @@
     <!-- Hero Section -->
     <div class="relative bg-green-700">
         <div class="absolute inset-0">
-            <img src="{{ asset('images/services-hero.jpg') }}" alt="Services" class="w-full h-full object-cover opacity-30">
+            <img src="https://i0.wp.com/kanostate.gov.ng/wp-content/uploads/2024/08/Kano.jpg?fit=1024%2C640&ssl=1" alt="Services" class="w-full h-full object-cover opacity-30">
         </div>
         <div class="relative max-w-7xl mx-auto py-24 px-4 sm:py-32 sm:px-6 lg:px-8">
             <h1 class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">Our Services</h1>

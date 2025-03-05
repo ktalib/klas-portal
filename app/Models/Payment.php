@@ -15,24 +15,10 @@ class Payment extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id',
-        'amount',
-        'payment_type',
         'reference',
+        'amount',
         'status',
-        'transaction_id',
-        'payment_method',
-        'metadata',
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'amount' => 'decimal:2',
-        'metadata' => 'array',
+        'user_id',
     ];
 
     /**

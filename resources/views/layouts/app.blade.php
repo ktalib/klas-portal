@@ -33,26 +33,28 @@
 
         <!-- Flash Messages -->
         @if (session('success'))
-            <script>
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success!',
-                    text: "{{ session('success') }}",
-                    confirmButtonColor: '#10B981'
-                })
-            </script>
-        @endif
-
-        @if (session('error'))
-            <script>
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error!',
-                    text: "{{ session('error') }}",
-                    confirmButtonColor: '#EF4444'
-                })
-            </script>
-        @endif
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: @json(session('success')),
+                confirmButtonColor: '#10B981'
+            })
+        </script>
+    @endif
+    
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: @json(session('error')),
+                confirmButtonColor: '#EF4444'
+            })
+        </script>
+    @endif
+    
+    
 
         <!-- Page Content -->
         <main>
