@@ -48,6 +48,7 @@ class LegalSearchController extends Controller
                  'reference' => 'DUMMY-' . time(),
                  'amount' => 10000, // Assuming the amount is ₦10,000
                  'status' => 'completed',
+                 'service_code' => range(1000, 9999), 
                  'user_id' => Auth::id(),
              ]);
      
