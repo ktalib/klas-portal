@@ -155,8 +155,9 @@ class LegalSearchController extends Controller
              $results = LegalSearch::all();
 
              return redirect()->route('legal-search.payment', ['results' => $results])
-                 ->with('success', "Payment successful. Your search report is ready. Service Code: $serviceCode")
-                 ->with('service_code', $serviceCode);
+             ->with('success', "Payment successful. Your search report is ready. Service Code: $serviceCode, Reference: $reference")
+             ->with('service_code', $serviceCode)
+             ->with('reference', $reference);
          }
       
      
