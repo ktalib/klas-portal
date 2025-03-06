@@ -42,7 +42,7 @@ Route::get('legal-search/results', [LegalSearchController::class, 'results'])->n
 Route::get('legal-search/report', [LegalSearchController::class, 'report'])->name('legal-search.report');
 Route::get('/legal-search/report/{id}', [LegalSearchController::class, 'report'])->name('legal-search.report');
 Route::get('/legal-search/report/{id}', [LegalSearchController::class, 'report'])->name('legal-search.report');
-
+Route::get('legal-search/results', [LegalSearchController::class, 'searchResults'])->name('legal-search.results');
 // Webmap routes
 Route::get('/webmap', [WebmapController::class, 'index'])->name('webmap');
 

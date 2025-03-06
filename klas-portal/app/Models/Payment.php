@@ -9,33 +9,22 @@ class Payment extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'reference',
         'amount',
         'status',
-        // 'service_code',
+        'service_code',
         'user_id',
     ];
 
-    /**
-     * Get the user that made the payment.
-     */
+    // Define any relationships if necessary
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * Get the legal search associated with the payment.
-     */
     public function legalSearch()
     {
         return $this->hasOne(LegalSearch::class);
     }
 }
-

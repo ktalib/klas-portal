@@ -42,18 +42,12 @@ class LegalSearchController extends Controller
              if ($results->isEmpty()) {
                  return back()->with('error', 'No records found for the provided file number.')->withInput();
              }
-     
-             // Create a dummy payment record
-             $payment = Payment::create([
-                 'reference' => 'DUMMY-' . time(),
-                 'amount' => 10000, // Assuming the amount is ₦10,000
-                 'status' => 'completed',
-                 'service_code' => range(1000, 9999), 
-                 'user_id' => Auth::id(),
-             ]);
+      
      
              // Redirect to the results view with the matching records
-             return view('legal-search.results', compact('results'));
+             //return view('legal-search.results', compact('results'));
+             
+             return view('legal-search.payment', compact('results'));
          }
      
          /**
@@ -119,16 +113,9 @@ class LegalSearchController extends Controller
                  return back()->with('error', 'No records found for the provided search parameters.')->withInput();
              }
      
-             // Create a dummy payment record
-             $payment = Payment::create([
-                 'reference' => 'DUMMY-' . time(),
-                 'amount' => 10000, // Assuming the amount is ₦10,000
-                 'status' => 'completed',
-                 'user_id' => Auth::id(),
-             ]);
-     
+        
              // Redirect to the results view with the matching records
-             return view('legal-search.results', compact('results'));
+             return view('legal-search.payment', compact('results'));
          }
      
          /**
@@ -144,33 +131,26 @@ class LegalSearchController extends Controller
           */
          public function processPayment(Request $request)
          {
-             $request->validate([
-                 'payment_reference' => 'required|string',
-                 'file_number' => 'required|string|max:255',
-             ]);
-     
              // Create a dummy payment record
              $payment = Payment::create([
                  'reference' => $request->payment_reference,
                  'amount' => 10000, // Assuming the amount is ₦10,000
                  'status' => 'completed',
+                 'service_code' => 'SC-' . time(),
+                 'plot_number' => $request->file_number,
                  'user_id' => Auth::id(),
              ]);
-     
+
+             $serviceCode = $payment->service_code;
+             $reference = $payment->reference;
+
              // Find the legal search record
-             $legalSearch = LegalSearch::where('file_number', $request->file_number)->first();
-     
-             if (!$legalSearch) {
-                 return back()->with('error', 'No matching legal search record found.')->withInput();
-             }
-     
-             // Update legal search record with payment details
-             $legalSearch->service_code = 'SC-' . time();
-             $legalSearch->payment_id = $payment->id;
-             $legalSearch->status = 'completed';
-             $legalSearch->save();
-     
-             return redirect()->route('legal-search.report')->with('success', 'Payment successful. Your search report is ready.');
+             $results = LegalSearch::all();
+
+             return redirect()->route('legal-search.results', ['results' => $results])
+                 ->with('success', "Payment successful. Your search report is ready. Service Code: $serviceCode, Reference: $reference")
+                 ->with('service_code', $serviceCode)
+                 ->with('reference', $reference);
          }
       
      

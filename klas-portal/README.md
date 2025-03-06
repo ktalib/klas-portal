@@ -13,7 +13,7 @@ This project is a Legal Search System that allows users to search for legal reco
 ## Project Structure
 
 ```
-<!-- klas-portal
+klas-portal
 ├── app
 │   ├── Http
 │   │   ├── Controllers
@@ -34,7 +34,7 @@ This project is a Legal Search System that allows users to search for legal reco
 │   └── web.php
 ├── .env
 ├── composer.json
-└── README.md -->
+└── README.md
 ```
 
 ## Installation
