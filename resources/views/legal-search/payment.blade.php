@@ -36,9 +36,23 @@
                         <input type="hidden" name="file_number" id="file_number" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" placeholder="Enter file number">
                         <input type="hidden" name="payment_reference" id="payment_reference" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" placeholder="Enter payment reference">
                         <div>
-                            <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                            <button type="submit" id="process-payment-btn" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
                                 Process Payment
                             </button>
+                            <script>
+                                document.getElementById('process-payment-btn').addEventListener('click', function(event) {
+                                    event.preventDefault(); // Prevent default form submission
+
+                                    var button = this;
+                                    button.innerHTML = 'Processing...';
+                                    button.disabled = true;
+
+                                    // Submit the form after a short delay to allow the UI to update
+                                    setTimeout(function() {
+                                        button.form.submit();
+                                    }, 100); // Delay of 0.1 seconds
+                                });
+                            </script>
                         </div>
                     </form>
                 </div>
@@ -48,16 +62,16 @@
                     {{-- <form action="{{ route('legal-search.results') }}" method="POST">
                         @csrf --}}
                         <div class="mb-4">
-                            <label for="file_number" class="block text-sm font-medium text-gray-700">File Number</label>
+                            <label for="file_number" class="block text-sm font-medium text-gray-700">Service Code</label>
                             <input type="text" name="file_number" id="file_number" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" placeholder="Enter file number">
                         </div>
-                        <div class="mb-4">
+                        {{-- <div class="mb-4">
                             <label for="payment_reference" class="block text-sm font-medium text-gray-700">Payment Reference</label>
                             <input type="text" name="payment_reference" id="payment_reference" class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" placeholder="Enter payment reference">
-                        </div>
+                        </div> --}}
                         <div>
                             <a  href="{{ route('legal-search.results') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
-                                Submit
+                                Generate Report  
                             </a>
                         </div>
                     {{-- </form> --}}

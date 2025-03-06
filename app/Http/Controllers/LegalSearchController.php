@@ -123,7 +123,13 @@ class LegalSearchController extends Controller
           */
          public function payment()
          {
-             return view('legal-search.payment');
+          
+
+     
+
+            // Find the legal search record
+            $results = LegalSearch::all();
+             return view('legal-search.payment' , compact('results'));
          }
      
          /**
@@ -132,8 +138,10 @@ class LegalSearchController extends Controller
          public function processPayment(Request $request)
          {
              // Create a dummy payment record
+             $serviceCode = 'SC-' . time();
+             $reference = ' REF-' . time();
              $payment = Payment::create([
-                 'reference' => $request->payment_reference,
+                 'reference' =>   $reference,
                  'amount' => 10000, // Assuming the amount is ₦10,000
                  'status' => 'completed',
                  'service_code' => 'SC-' . time(),
@@ -141,16 +149,14 @@ class LegalSearchController extends Controller
                  'user_id' => Auth::id(),
              ]);
 
-             $serviceCode = $payment->service_code;
-             $reference = $payment->reference;
+      
 
              // Find the legal search record
              $results = LegalSearch::all();
 
-             return redirect()->route('legal-search.results', ['results' => $results])
-                 ->with('success', "Payment successful. Your search report is ready. Service Code: $serviceCode, Reference: $reference")
-                 ->with('service_code', $serviceCode)
-                 ->with('reference', $reference);
+             return redirect()->route('legal-search.payment', ['results' => $results])
+                 ->with('success', "Payment successful. Your search report is ready. Service Code: $serviceCode")
+                 ->with('service_code', $serviceCode);
          }
       
      
