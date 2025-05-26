@@ -3,10 +3,49 @@
 @section('title', 'Search Results')
 
 @section('content')
+<style>
+    #preloader {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: rgba(255, 255, 255, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        backdrop-filter: blur(5px);
+    }
 
+    #preloader img {
+        width: 100px; /* Adjust the size as needed */
+        height: auto;
+    }
+
+    body.loading {
+        overflow: hidden;
+    }
+
+    body.loading .pc-container {
+        filter: blur(5px);
+    }
+</style>
+<div id="preloader">
+    <img src="https://kangis-demo.tozinh.site/1.png" alt="Loading...">
+</div>
 <div class="py-12 bg-gray-50" style="display: none;">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+             
+           <div class="text-left ml-4">
+            <img src="https://i.ibb.co/pSpyR5B/Whats-App-Image-2025-02-21-at-7-06-36-AM.jpg"  class="h-16 w-auto mb-4">
+            <h2 class="text-gray-900">
+                <strong>
+                KLAS (KANO STATE LAND ADMIN SYSTEM)
+                </strong>
+            </h2>
+           </div>
             <div class="p-6 bg-white border-b border-gray-200">
                 <h2 class="text-2xl font-bold text-gray-800 mb-6">Search Results</h2>
 
@@ -48,6 +87,15 @@
 @if(isset($result))
 <div id="reportView">
     <div class="container mx-auto mt-4 p-4">
+         
+           <div class="text-left ml-4">
+            <img src="https://i.ibb.co/pSpyR5B/Whats-App-Image-2025-02-21-at-7-06-36-AM.jpg"  class="h-16 w-auto mb-4">
+            <h2 class="text-gray-900">
+                <strong>
+                KLAS (KANO STATE LAND ADMIN SYSTEM)
+                </strong>
+            </h2>
+           </div>
         <h2 class="text-2xl font-bold text-gray-800 mb-6">Search Results</h2>
         <div class="bg-white rounded-lg shadow-md mb-4">
             <div class="bg-blue-500 text-white p-3 rounded-t-lg">Property Details</div>
@@ -72,6 +120,8 @@
                             <th class="py-3 px-4 border border-gray-300">Date</th>
                             <th class="py-3 px-4 border border-gray-300">Reg. No.</th>
                             <th class="py-3 px-4 border border-gray-300">Size</th>
+                            <th class="py-3 px-4 border border-gray-300">Caveat</th>
+
                             <th class="py-3 px-4 border border-gray-300">Comments</th>
                         </tr>
                     </thead>
@@ -84,7 +134,7 @@
                                 <td class="py-4 px-4 border border-gray-300">{{ $transaction->instrument_type }}</td>
                                 <td class="py-4 px-4 border border-gray-300">{{ $transaction->transaction_date }}</td>
                                 <td class="py-4 px-4 border border-gray-300">{{ $transaction->registration_number }}</td>
-                                <td class="py-4 px-4 border border-gray-300">{{ $transaction->size }}</td>
+                                <td class="py-4 px-4 border border-gray-300">{{ $transaction->size }}</td> <td class="py-4 px-4 border border-gray-300">No</td>
                                 <td class="py-4 px-4 border border-gray-300">{{ $transaction->comments }}</td>
                             </tr>
                         @endforeach
@@ -103,10 +153,38 @@
 </div> 
 
 <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var preloader = document.getElementById('preloader');
+        document.body.classList.add('loading');
+        setTimeout(function() {
+            preloader.style.display = 'none';
+            document.body.classList.remove('loading');
+        }, 2000); // Adjust the time as needed
+    });
+
     function printReport() {
+        var reportView = document.getElementById("reportView");
+        var originalContents = document.body.innerHTML;
+        document.body.innerHTML = reportView.outerHTML;
         window.print();
+        document.body.innerHTML = originalContents;
     }
 
 </script>
 @endif
 @endsection
+<style type="text/css">
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+        #reportView, #reportView * {
+            visibility: visible;
+        }
+        #reportView {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    }
+</style>

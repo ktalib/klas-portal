@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\LegalSearch;
 use App\Models\Payment;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class LegalSearchController extends Controller
 {
@@ -43,6 +44,7 @@ class LegalSearchController extends Controller
                  return back()->with('error', 'No records found for the provided file number.')->withInput();
              }
       
+             Session::put('search_performed', true);
      
              // Redirect to the results view with the matching records
              //return view('legal-search.results', compact('results'));
@@ -109,10 +111,12 @@ class LegalSearchController extends Controller
              $results = $query->get();
      
              // Check if any records were found
+            
              if ($results->isEmpty()) {
-                 return back()->with('error', 'No records found for the provided search parameters.')->withInput();
-             }
-     
+                return back()->with('error', 'No records found for the provided parameters.')->withInput();
+            }
+
+            Session::put('search_performed', true);
         
              // Redirect to the results view with the matching records
              return view('legal-search.payment', compact('results'));
@@ -168,6 +172,11 @@ class LegalSearchController extends Controller
      */
     public function report($id)
     {
+        // Check if a search has been performed
+        if (!Session::has('search_performed')) {
+            return redirect()->route('legal-search')->with('error', 'Please perform a search before accessing the report.');
+        }
+
         // Fetch the main result
         $result = LegalSearch::findOrFail($id);
     

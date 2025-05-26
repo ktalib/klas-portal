@@ -3,9 +3,50 @@
 @section('title', 'Legal Search')
 
 @section('content')
+<style>
+    #preloader {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: rgba(255, 255, 255, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        backdrop-filter: blur(5px);
+    }
+
+    #preloader img {
+        width: 100px; /* Adjust the size as needed */
+        height: auto;
+    }
+
+    body.loading {
+        overflow: hidden;
+    }
+
+    body.loading .pc-container {
+        filter: blur(5px);
+    }
+</style>
+<div id="preloader">
+    <img src="http://klas.com.ng/storage/upload/logo/klas_logo.gif" alt="Loading...">
+</div>
+
 <div class="py-12 bg-gray-50">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+          
+           <div class="text-left ml-4">
+            <img src="http://klas.com.ng/storage/upload/logo/1.jpeg"  class="h-16 w-auto mb-4">
+            <h2 class="text-gray-900">
+                <strong>
+                KLAS (KANO STATE LAND ADMIN SYSTEM)
+                </strong>
+            </h2>
+           </div>
             <div class="p-6 bg-white border-b border-gray-200">
                 <h2 class="text-2xl font-bold text-gray-800 mb-6">Legal Search</h2>
                 
@@ -70,23 +111,23 @@
 
 <!-- Plot Details Search Form -->
 <div id="details-search" class="hidden mb-8">
-    <form action="{{ route('legal-search.search') }}" method="POST" class="space-y-6">
+    <form action="{{ route('legal-search.advanced-search') }}" method="POST" class="space-y-6">
         @csrf
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div>
-                <label for="file_number" class="block text-sm font-medium text-gray-700">KN File Number</label>
+                <label for="file_number" class="block text-sm font-medium text-gray-700">NEWKANGISFileNo</label>
                 <div class="mt-1">
-                    <input type="text" name="file_number" id="file_number" class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Enter file number">
+                    <input type="text" name="file_number" id="file_number" class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Enter NEWKANGIS file number">
                 </div>
             </div>
             <div>
-                <label for="kangis_file_number" class="block text-sm font-medium text-gray-700">KANGIS File Number</label>
+                <label for="kangis_file_number" class="block text-sm font-medium text-gray-700">KANGISFileNo</label>
                 <div class="mt-1">
                     <input type="text" name="kangis_file_number" id="kangis_file_number" class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Enter KANGIS file number">
                 </div>
             </div>
             <div>
-                <label for="mlsf_no" class="block text-sm font-medium text-gray-700">MLSF Number</label>
+                <label for="mlsf_no" class="block text-sm font-medium text-gray-700">MLSFileNo</label>
                 <div class="mt-1">
                     <input type="text" name="mlsf_no" id="mlsf_no" class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Enter MLSF number">
                 </div>
@@ -175,9 +216,17 @@
         </div>
     </div>
 </div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
+   <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var preloader = document.getElementById('preloader');
+            document.body.classList.add('loading');
+            setTimeout(function() {
+                preloader.style.display = 'none';
+                document.body.classList.remove('loading');
+            }, 2000); // Adjust the time as needed
+        });
+  
+        document.addEventListener('DOMContentLoaded', function() {
         const fileNumberTab = document.getElementById('file-number-tab');
         const detailsTab = document.getElementById('details-tab');
         const fileNumberSearch = document.getElementById('file-number-search');

@@ -3,11 +3,50 @@
 @section('title', 'Payment')
 
 @section('content')
+<style>
+    #preloader {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: rgba(255, 255, 255, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        backdrop-filter: blur(5px);
+    }
 
+    #preloader img {
+        width: 100px; /* Adjust the size as needed */
+        height: auto;
+    }
+
+    body.loading {
+        overflow: hidden;
+    }
+
+    body.loading .pc-container {
+        filter: blur(5px);
+    }
+</style>
+<div id="preloader">
+    <img src="https://kangis-demo.tozinh.site/1.png" alt="Loading...">
+</div>
 <div class="py-12 bg-gray-50">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6 bg-white border-b border-gray-200">
+                 
+           <div class="text-left ml-4">
+            <img src="https://i.ibb.co/pSpyR5B/Whats-App-Image-2025-02-21-at-7-06-36-AM.jpg"  class="h-16 w-auto mb-4">
+            <h2 class="text-gray-900">
+                <strong>
+                KLAS (KANO STATE LAND ADMIN SYSTEM)
+                </strong>
+            </h2>
+           </div>
                 <h2 class="text-2xl font-bold text-gray-800 mb-6">Payment Portal</h2>
 
                 <p class="text-gray-600 mb-4">
@@ -45,10 +84,10 @@
                     </div>
 
                     <div>
-                        <a  href="{{ route('legal-search.results') }}" id="search-btn" disabled
+                        <a href="{{ route('legal-search.results') }}" id="search-btn" disabled
                             class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-gray-400 cursor-not-allowed">
                             Search
-                    </a>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -57,20 +96,38 @@
 </div>
 
 <script>
-    // Simulate the backend response after a successful payment
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
+        var preloader = document.getElementById('preloader');
+        document.body.classList.add('loading');
+        setTimeout(function() {
+            preloader.style.display = 'none';
+            document.body.classList.remove('loading');
+        }, 2000); // Adjust the time as needed
+
+        var searchBtn = document.getElementById("search-btn");
+        // Prevent clicking when the search button is disabled
+        searchBtn.addEventListener("click", function(e) {
+            if (searchBtn.hasAttribute("disabled")) {
+                e.preventDefault();
+            }
+        });
+
+        // Simulate the backend response after a successful payment
         let serviceCode = "{{ session('service_code') }}";
         let referenceCode = "{{ session('reference') }}";
         
         if (serviceCode && referenceCode) {
             document.getElementById("service_code").value = serviceCode;
             document.getElementById("reference_code").value = referenceCode;
-
-            let searchBtn = document.getElementById("search-btn");
-            searchBtn.disabled = false;
+            searchBtn.removeAttribute("disabled");
             searchBtn.classList.remove("bg-gray-400", "cursor-not-allowed");
             searchBtn.classList.add("bg-green-600", "hover:bg-green-700");
         }
+    });
+
+    window.addEventListener('beforeunload', function (event) {
+        // Clear the search_performed session variable
+        sessionStorage.removeItem('search_performed');
     });
 </script>
 

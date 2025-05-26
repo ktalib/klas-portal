@@ -41,7 +41,6 @@ Route::post('legal-search/process-payment', [LegalSearchController::class, 'proc
 Route::get('legal-search/results', [LegalSearchController::class, 'results'])->name('legal-search.results');
 Route::get('legal-search/report', [LegalSearchController::class, 'report'])->name('legal-search.report');
 Route::get('/legal-search/report/{id}', [LegalSearchController::class, 'report'])->name('legal-search.report');
-Route::get('/legal-search/report/{id}', [LegalSearchController::class, 'report'])->name('legal-search.report');
 Route::get('legal-search/results', [LegalSearchController::class, 'searchResults'])->name('legal-search.results');
 // Webmap routes
 Route::get('/webmap', [WebmapController::class, 'index'])->name('webmap');

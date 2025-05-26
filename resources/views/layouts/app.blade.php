@@ -7,6 +7,28 @@
 
     <title>{{ config('app.name', 'KANGIS') }} - @yield('title', 'Kano State Geographic Information System')</title>
 
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Official portal for Kano State Geographic Information System (KANGIS). Access land information, GIS data, and related services.">
+    <meta name="keywords" content="KANGIS, Kano State, Geographic Information System, GIS, Land Information, Kano State Government">
+    <meta name="author" content="KANGIS">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="{{ config('app.name', 'KANGIS') }} - @yield('title', 'Kano State Geographic Information System')">
+    <meta property="og:description" content="Official portal for Kano State Geographic Information System (KANGIS). Access land information, GIS data, and related services.">
+    <meta property="og:image" content="https://i.ibb.co/p6fGzp43/Whats-App-Image-2025-02-28-at-4-01-36-PM.jpg">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ config('app.name', 'KANGIS') }} - @yield('title', 'Kano State Geographic Information System')">
+    <meta name="twitter:description" content="Official portal for Kano State Geographic Information System (KANGIS). Access land information, GIS data, and related services.">
+    <meta name="twitter:image" content="https://i.ibb.co/p6fGzp43/Whats-App-Image-2025-02-28-at-4-01-36-PM.jpg">
+
+    <!-- Favicon -->
+    <link rel="icon" href="http://localhost/klas-portal/public/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="http://localhost/klas-portal/public/favicon.ico" type="image/x-icon">
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

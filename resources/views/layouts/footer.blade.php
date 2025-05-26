@@ -20,11 +20,11 @@
             <div>
                 <h3 class="text-sm font-semibold text-yellow-300 tracking-wider uppercase mb-4">Services</h3>
                 <ul class="space-y-2">
-                    <li><a href="{{ route('services.first-registration') }}" class="text-gray-200 hover:text-white">First Registration</a></li>
-                    <li><a href="{{ route('services.regularization') }}" class="text-gray-200 hover:text-white">Regularization</a></li>
-                    <li><a href="{{ route('services.recertification') }}" class="text-gray-200 hover:text-white">Recertification</a></li>
-                    <li><a href="{{ route('services.fresh-allocation') }}" class="text-gray-200 hover:text-white">Fresh Allocation</a></li>
-                    <li><a href="{{ route('services.forms') }}" class="text-gray-200 hover:text-white">Download Forms</a></li>
+                    <li><a href="javascript:void(0);" class="text-gray-200 hover:text-white" onclick="alert('This service is not yet available.')">First Registration</a></li>
+                    <li><a href="javascript:void(0);" class="text-gray-200 hover:text-white" onclick="alert('This service is not yet available.')">Regularization</a></li>
+                    <li><a href="javascript:void(0);" class="text-gray-200 hover:text-white" onclick="alert('This service is not yet available.')">Recertification</a></li>
+                    <li><a href="javascript:void(0);" class="text-gray-200 hover:text-white" onclick="alert('This service is not yet available.')">Fresh Allocation</a></li>
+                    <li><a href="javascript:void(0);" class="text-gray-200 hover:text-white" onclick="alert('This service is not yet available.')">Download Forms</a></li>
                 </ul>
             </div>
             <div>

@@ -202,9 +202,42 @@
             text-align: center;
         }
   </style>
+      <style>
+        #preloader {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        #preloader img {
+            width: 100px; /* Adjust the size as needed */
+            height: auto;
+        }
+
+        body.loading {
+            overflow: hidden;
+        }
+
+        body.loading .pc-container {
+            filter: blur(5px);
+        }
+    </style>
+    <div id="preloader">
+        <img src="https://kangis-demo.tozinh.site/1.png" alt="Loading...">
+    </div>
 <div class="py-12 bg-gray-50">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            
+
             <div class="p-6 bg-white border-b border-gray-200">
                 <h2 class="text-2xl font-bold text-gray-800 mb-6">Search Report</h2>
 
@@ -267,6 +300,7 @@
                                     <th class="col-date">Date</th>
                                     <th class="col-reg">Reg. No.</th>
                                     <th class="col-size">Size</th>
+                                    <th class="col-caveat">Caveat</th>
                                     <th class="col-comments">Comments</th>
                                 </tr>
                             </thead>
@@ -280,6 +314,7 @@
                                         <td>{{ $transaction->transaction_date }}</td>
                                         <td>{{ $transaction->registration_number }}</td>
                                         <td>{{ $transaction->size }}</td>
+                                        <td>No</td>
                                         <td>{{ $transaction->comments }}</td>
                                     </tr>
                                 @endforeach
@@ -336,7 +371,7 @@
                     <button id="download-pdf" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2">
                         Download PDF Report
                     </button>
-                    <button onclick="printReport()" class="bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded">Print Report</button>
+                    <button id="print-report" class="bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded">Print Report</button>
                 </div>
             </div>
         </div>
@@ -345,20 +380,294 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
 <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var preloader = document.getElementById('preloader');
+        document.body.classList.add('loading');
+        setTimeout(function() {
+            preloader.style.display = 'none';
+            document.body.classList.remove('loading');
+        }, 2000); // Adjust the time as needed
+    });
+
+    function cloneReportContent() {
+        var element = document.getElementById('report-content').cloneNode(true);
+        element.style.margin = '0';
+        element.style.padding = '0';
+        element.style.backgroundColor = 'white'; // Ensure white background
+        element.style.width = '100%'; // Take full width
+        element.style.boxSizing = 'border-box'; // Include padding and border in the element's total width and height
+
+        // Adjust header styles
+        var header = element.querySelector('.header');
+        if (header) {
+            header.style.display = 'flex';
+            header.style.justifyContent = 'space-between';
+            header.style.alignItems = 'center';
+        }
+
+        // Adjust images within the header
+        var headerImages = element.querySelectorAll('.header img');
+        headerImages.forEach(function(img) {
+            img.style.width = '80px';
+            img.style.height = '80px';
+        });
+
+        // Adjust header text styles
+        var headerText = element.querySelector('.header-text');
+        if (headerText) {
+            headerText.style.textAlign = 'center';
+            headerText.style.flexGrow = '1';
+            headerText.style.margin = '0 20px';
+        }
+
+        // Adjust date section style
+        var dateSection = element.querySelector('.date-section');
+        if (dateSection) {
+            dateSection.style.textAlign = 'right';
+            dateSection.style.fontSize = '12px';
+        }
+
+        // Adjust section title style
+        var sectionTitle = element.querySelectorAll('.section-title');
+            sectionTitle.forEach(function(title) {
+            title.style.border = '1px solid black';
+            title.style.padding = '2px 5px';
+            title.style.fontSize = '12px';
+            title.style.fontWeight = 'bold';
+            title.style.backgroundColor = '#f5f5f5';
+            title.style.display = 'inline-block';
+            title.style.marginBottom = '5px';
+        });
+
+        // Adjust property details style
+        var propertyDetails = element.querySelector('.property-details');
+        if (propertyDetails) {
+            propertyDetails.style.borderTop = '1px solid black';
+            propertyDetails.style.marginTop = '0';
+            propertyDetails.style.paddingTop = '10px';
+        }
+
+        // Adjust property row style
+        var propertyRows = element.querySelectorAll('.property-row');
+        propertyRows.forEach(function(row) {
+            row.style.display = 'flex';
+            row.style.marginBottom = '5px';
+            row.style.fontSize = '12px';
+        });
+
+        // Adjust property label style
+        var propertyLabels = element.querySelectorAll('.property-label');
+        propertyLabels.forEach(function(label) {
+            label.style.width = '150px';
+            label.style.fontWeight = 'bold';
+        });
+
+        // Adjust transaction history style
+        var transactionHistory = element.querySelector('.transaction-history');
+        if (transactionHistory) {
+            transactionHistory.style.marginTop = '20px';
+            transactionHistory.style.borderTop = '1px solid black';
+            transactionHistory.style.paddingTop = '10px';
+        }
+
+        // Adjust table style
+        var table = element.querySelector('table');
+        if (table) {
+            table.style.width = '100%';
+            table.style.borderCollapse = 'collapse';
+            table.style.fontSize = '11px';
+        }
+
+        // Adjust th and td styles
+        var thElements = element.querySelectorAll('th');
+        thElements.forEach(function(th) {
+            th.style.padding = '3px';
+            th.style.textAlign = 'left';
+            th.style.verticalAlign = 'top';
+            th.style.backgroundColor = 'white';
+            th.style.fontWeight = 'bold';
+        });
+
+        var tdElements = element.querySelectorAll('td');
+        tdElements.forEach(function(td) {
+            td.style.padding = '3px';
+            td.style.textAlign = 'left';
+            td.style.verticalAlign = 'top';
+        });
+
+        // Adjust column widths
+        var colSn = element.querySelectorAll('.col-sn');
+        colSn.forEach(function(col) {
+            col.style.width = '20px';
+        });
+
+        var colGrantor = element.querySelectorAll('.col-grantor');
+        colGrantor.forEach(function(col) {
+            col.style.width = '150px';
+        });
+
+        var colGrantee = element.querySelectorAll('.col-grantee');
+        colGrantee.forEach(function(col) {
+            col.style.width = '150px';
+        });
+
+        var colInstrument = element.querySelectorAll('.col-instrument');
+        colInstrument.forEach(function(col) {
+            col.style.width = '125px';
+        });
+
+        var colDate = element.querySelectorAll('.col-date');
+        colDate.forEach(function(col) {
+            col.style.width = '70px';
+        });
+
+        var colReg = element.querySelectorAll('.col-reg');
+        colReg.forEach(function(col) {
+            col.style.width = '60px';
+        });
+
+        var colSize = element.querySelectorAll('.col-size');
+        colSize.forEach(function(col) {
+            col.style.width = '60px';
+        });
+
+        var colCaveat = element.querySelectorAll('.col-caveat');
+        colCaveat.forEach(function(col) {
+            col.style.width = '60px';
+        });
+
+        var colComments = element.querySelectorAll('.col-comments');
+        colComments.forEach(function(col) {
+            col.style.width = '180px';
+        });
+
+        // Adjust footer styles
+        var footer = element.querySelector('.footer');
+        if (footer) {
+            footer.style.fontFamily = 'Arial, sans-serif';
+            footer.style.marginTop = '30px';
+            footer.style.padding = '10px 0';
+            footer.style.borderTop = '1px solid #eee';
+            footer.style.width = '100%';
+        }
+
+        var timestamp = element.querySelector('.timestamp');
+        if (timestamp) {
+            timestamp.style.fontSize = '12px';
+            timestamp.style.fontWeight = 'bold';
+            timestamp.style.textAlign = 'left';
+            timestamp.style.marginBottom = '20px';
+        }
+
+        var footerContent = element.querySelector('.footer-content');
+        if (footerContent) {
+            footerContent.style.display = 'flex';
+            footerContent.style.justifyContent = 'space-between';
+            footerContent.style.alignItems = 'flex-start';
+            footerContent.style.marginBottom = '15px';
+        }
+
+        var signatureBlock = element.querySelector('.signature-block');
+        if (signatureBlock) {
+            signatureBlock.style.display = 'flex';
+            signatureBlock.style.flexDirection = 'column';
+            signatureBlock.style.alignItems = 'flex-start';
+        }
+
+        var signatureText = element.querySelector('.signature-text');
+        if (signatureText) {
+            signatureText.style.fontSize = '12px';
+            signatureText.style.marginBottom = '5px';
+        }
+
+         var signatureImage = element.querySelector('.signature-image');
+        if (signatureImage) {
+            signatureImage.style.border = '2px solid #0047AB';
+            signatureImage.style.padding = '5px';
+            signatureImage.style.transform = 'rotate(-20deg)';
+            signatureImage.style.width = '200px';
+            signatureImage.style.height = '45px';
+        }
+
+        var printInfo = element.querySelector('.print-info');
+        if (printInfo) {
+            printInfo.style.fontSize = '12px';
+            printInfo.style.textAlign = 'right';
+        }
+
+        var barcode = element.querySelector('.barcode');
+        if (barcode) {
+            barcode.style.textAlign = 'center';
+            barcode.style.margin = '15px 0';
+        }
+
+        var disclaimer = element.querySelector('.disclaimer');
+        if (disclaimer) {
+            disclaimer.style.fontSize = '11px';
+            disclaimer.style.textAlign = 'center';
+            disclaimer.style.marginBottom = '10px';
+        }
+
+        var contactInfo = element.querySelector('.contact-info');
+        if (contactInfo) {
+            contactInfo.style.fontSize = '11px';
+            contactInfo.style.textAlign = 'center';
+            contactInfo.style.marginBottom = '10px';
+        }
+
+        var geoInfo = element.querySelector('.geo-info');
+        if (geoInfo) {
+            geoInfo.style.fontSize = '11px';
+            geoInfo.style.textAlign = 'center';
+        }
+
+        return element;
+    }
+
     document.getElementById('download-pdf').addEventListener('click', function () {
-        var element = document.getElementById('report-content');
+        var element = cloneReportContent();
         var opt = {
             margin:       0.5,
             filename:     'Search_Report.pdf',
             image:        { type: 'jpeg', quality: 0.98 },
-            html2canvas:  { scale: 2 },
+            html2canvas:  { scale: 2, useCORS: true },
             jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
         };
         html2pdf().from(element).set(opt).save();
     });
 
-    function printReport() {
-        window.print();
-    }
+    document.getElementById('print-report').addEventListener('click', function () {
+        var printContents = cloneReportContent();
+        var originalContents = document.body.innerHTML;
+
+        // Create a new window for printing
+        var printWindow = window.open('', '_blank');
+        printWindow.document.open();
+        printWindow.document.write('<html><head><title>Print</title><style type="text/css">');
+
+        // Copy styles from the original document
+        for (var i = 0; i < document.styleSheets.length; i++) {
+            var styleSheet = document.styleSheets[i];
+            if (styleSheet.cssRules) {
+                for (var j = 0; j < styleSheet.cssRules.length; j++) {
+                    printWindow.document.write(styleSheet.cssRules[j].cssText + '\n');
+                }
+            }
+        }
+
+        printWindow.document.write('</style></head><body>');
+        printWindow.document.write(printContents.outerHTML);
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+
+        // Print the new window
+        printWindow.focus();
+        printWindow.print();
+		
+        printWindow.onafterprint = function() {
+            printWindow.close();
+            document.body.innerHTML = originalContents;
+        };
+    });
 </script>
 @endsection
